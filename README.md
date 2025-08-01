@@ -1,4 +1,4 @@
-# vue-otp-input
+# vue2-otp-input (This is the fork of @bachdgvn/vue-otp-input with extra support for OTP autofill in iOS chrome)
 
 > A fully customizable, OTP(one-time password) input component built with Vue 2.x.
 
@@ -11,13 +11,13 @@
 To install the latest stable version:
 
 ```
-npm install --save @bachdgvn/vue-otp-input
+npm install --save vue2-otp-input
 ```
 
 Import to main.js:
 
 ```javascript
-import OtpInput from "@bachdgvn/vue-otp-input";
+import OtpInput from "vue2-otp-input";
 
 Vue.component("v-otp-input", OtpInput);
 ```
@@ -168,6 +168,7 @@ export default {
 </table>
 
 ## Changelog
+* **v1.0.17** - Support autofill OTP in iOS
 * **v1.0.8** - Fix #30: Support input type: "password"
 * **v1.0.7** - Fix #23: Not accepting numbers from numeric keypad in external keyboard
 * **v1.0.6** - Add feature to disallow certain characters like "." or "e".

@@ -9,6 +9,7 @@
     <SingleOtpInput
       v-for="(item, i) in numInputs"
       :key="i"
+      :index="i"
       :focus="activeInput === i"
       :value="otp[i]"
       :separator="separator"

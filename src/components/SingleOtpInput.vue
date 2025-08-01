@@ -32,6 +32,9 @@ export default {
     separator: {
       type: String,
     },
+    index: {
+      type: Number,
+    },
     focus: {
       type: Boolean,
     },
@@ -86,9 +89,23 @@ export default {
   methods: {
     handleOnChange() {
       if (this.model.length > 1) {
-        this.model = this.model.slice(0, 1);
+        if (this.index === 0) {
+          const fakeEvent = {
+            clipboardData: {
+              getData: () => this.model,
+            },
+            preventDefault: () => {},
+          };
+          this.handleOnPaste(fakeEvent);
+        } else {
+          this.model = this.model.slice(0, 1);
+        }
+      } else {
+        this.$emit(
+          'on-change',
+          this.model,
+        );
       }
-      return this.$emit('on-change', this.model);
     },
     handleOnKeyDown(event) {
       // Only allow characters 0-9, DEL, Backspace, Enter, Right and Left Arrows, and Pasting
