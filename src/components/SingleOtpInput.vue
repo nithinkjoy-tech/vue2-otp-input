@@ -89,12 +89,9 @@ export default {
   },
   methods: {
     handleOnChange() {
-      console.log("change event called", this.model)
       if (this.model.length > 1) {
         if (this.index === 0) {
-          console.log("0th index")
           if (!this.detectBrowser().isSafari) {
-            console.log("not safari")
             const fakeEvent = {
               clipboardData: {
                 getData: () => this.model,
@@ -102,8 +99,6 @@ export default {
               preventDefault: () => {},
             };
             this.handleOnPaste(fakeEvent);
-          } else {
-            console.log("it is safari")
           }
         } else {
           this.model = this.model.slice(0, 1);
