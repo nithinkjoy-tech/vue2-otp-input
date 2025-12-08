@@ -10,6 +10,7 @@
       pattern="[0-9]"
       v-model="model"
       :class="inputClasses"
+      :autocomplete="index === 0 ? 'one-time-code' : 'off'"
       @input="handleOnChange"
       @keydown="handleOnKeyDown"
       @paste="handleOnPaste"
@@ -88,15 +89,22 @@ export default {
   },
   methods: {
     handleOnChange() {
+      console.log("change event called", this.model)
       if (this.model.length > 1) {
         if (this.index === 0) {
-          const fakeEvent = {
-            clipboardData: {
-              getData: () => this.model,
-            },
-            preventDefault: () => {},
-          };
-          this.handleOnPaste(fakeEvent);
+          console.log("0th index")
+          if (!this.detectBrowser().isSafari) {
+            console.log("not safari")
+            const fakeEvent = {
+              clipboardData: {
+                getData: () => this.model,
+              },
+              preventDefault: () => {},
+            };
+            this.handleOnPaste(fakeEvent);
+          } else {
+            console.log("it is safari")
+          }
         } else {
           this.model = this.model.slice(0, 1);
         }
@@ -106,6 +114,18 @@ export default {
           this.model,
         );
       }
+    },
+    detectBrowser() {
+      const userAgent = navigator.userAgent.toLowerCase();
+
+      const isChrome = /chrome|chromium/.test(userAgent) && !/edg|opr|firefox/.test(userAgent);
+      const isChromeIOS = /crios/.test(userAgent);
+      const isSafari = /safari/.test(userAgent) && !/chrome|crios|chromium|edg|opr|firefox/.test(userAgent);
+
+      return {
+        isChrome: isChrome || isChromeIOS, // Treat iOS Chrome as Chrome
+        isSafari,
+      };
     },
     handleOnKeyDown(event) {
       // Only allow characters 0-9, DEL, Backspace, Enter, Right and Left Arrows, and Pasting
