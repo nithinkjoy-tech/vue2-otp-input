@@ -105,9 +105,12 @@ export default {
         } else {
           this.model = this.model.slice(0, 1);
         }
-      } else if(this.model.length === 1) {
-        this.$emit("single-input-change", this.model);
-      } else {
+        // eslint-disable-next-line brace-style
+      }
+      // else if(this.model.length === 1) {
+      //   this.$emit("single-input-change", this.model);
+      // }
+      else {
         this.$emit(
           'on-change',
           this.model,

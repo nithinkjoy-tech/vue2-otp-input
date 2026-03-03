@@ -148,8 +148,14 @@ export default {
       return this.checkFilledAllInputs();
     },
     handleOnChange(value) {
-      this.changeCodeAtFocus(value);
-      this.focusNextInput();
+      setTimeout(() => {
+        // alert("handleOnChange"+value);
+        this.changeCodeAtFocus(value);
+        this.focusNextInput();
+      }, 4);
+      setTimeout(() => {
+        this.checkFilledAllInputs();
+      }, 6);
     },
     clearInput() {
       if (this.otp.length > 0) {
