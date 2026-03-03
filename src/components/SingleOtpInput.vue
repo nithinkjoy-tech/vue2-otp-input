@@ -64,6 +64,7 @@ export default {
   data() {
     return {
       model: this.value || '',
+      inputData: "",
     };
   },
   mounted() {
@@ -89,6 +90,7 @@ export default {
   },
   methods: {
     handleOnChange() {
+      // alert(`model: ${this.model}, index: ${this.index}`);
       if (this.model.length > 1) {
         if (this.index === 0) {
           if (!this.detectBrowser().isSafari) {
@@ -103,6 +105,8 @@ export default {
         } else {
           this.model = this.model.slice(0, 1);
         }
+      } else if(this.model.length === 1) {
+        this.$emit("single-input-change", this.model);
       } else {
         this.$emit(
           'on-change',
@@ -137,6 +141,7 @@ export default {
       return (charCode >= 48 && charCode <= 57) || (charCode >= 96 && charCode <= 105);
     },
     handleOnPaste(event) {
+      // alert(`on-pastecalled`);
       return this.$emit('on-paste', event);
     },
     handleOnFocus() {
@@ -149,3 +154,13 @@ export default {
   },
 };
 </script>
+<style scoped>
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px transparent;
+}
+</style>

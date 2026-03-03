@@ -23,6 +23,7 @@
       @on-paste="handleOnPaste"
       @on-focus="handleOnFocus(i)"
       @on-blur="handleOnBlur"
+      @single-input-change="singleInputChange"
     />
   </div>
 </template>
@@ -74,10 +75,27 @@ export default {
       activeInput: 0,
       otp: [],
       oldOtp: [],
+      inputData: "",
     };
   },
 
   methods: {
+    singleInputChange(val) {
+      this.inputData += val;
+      // alert(`inputData length is ${this.inputData.length} elements`);
+      if(this.inputData.length === 4) {
+        // alert("inputdata is:"+this.inputData);
+        setTimeout(() => {
+          const fakeEvent = {
+            clipboardData: {
+              getData: () => this.inputData,
+            },
+            preventDefault: () => {},
+          };
+          this.handleOnPaste(fakeEvent);
+        }, 300);
+      }
+    },
     handleOnFocus(index) {
       this.activeInput = index;
     },
